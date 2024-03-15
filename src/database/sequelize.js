@@ -1,4 +1,4 @@
-import { Sequelize } from "sequelize";
+const { Sequelize } = require("sequelize");
 const dotenv = require("dotenv");
 dotenv.config({ path: "src/configs/.env.development" });
 
@@ -11,4 +11,4 @@ const sequelize = new Sequelize({
   database: process.env.POSTGRES_DB,
 });
 
-export default sequelize;
+module.exports = sequelize;
