@@ -6,6 +6,8 @@
   "scripts": {
     "front:dev": "next dev",
     "back:dev": "nodemon src/server.js",
+    "docker:up": "docker compose -f src/database/compose.yaml up -d",
+    "docker:down": "docker compose -f src/database/compose.yaml down",
     "prepare": "husky install",
     "lint:fix": "prettier . --write && eslint --fix .",
     "test": "jest",
