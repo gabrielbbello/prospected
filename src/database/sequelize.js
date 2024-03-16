@@ -11,4 +11,15 @@ const sequelize = new Sequelize({
   database: process.env.POSTGRES_DB,
 });
 
-module.exports = sequelize;
+function dbAuth() {
+  sequelize
+    .authenticate()
+    .then(() => {
+      console.log("Connection to the database has been established successfully.");
+    })
+    .catch((err) => {
+      console.error("Unable to connect to the database:", err);
+    });
+}
+
+module.exports = { sequelize, dbAuth };
