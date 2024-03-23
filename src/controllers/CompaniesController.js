@@ -9,6 +9,15 @@ class CompaniesController {
 
     return response.json(company);
   }
+
+  async update(request, response) {
+    const { name, sector, email, password, cnpj, oldPassword } = request.body;
+    const { id } = request.params;
+
+    const result = await companiesServices.updateCompany(id, name, sector, email, password, cnpj, oldPassword);
+
+    return response.json(result);
+  }
 }
 
 module.exports = CompaniesController;
