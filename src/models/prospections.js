@@ -10,9 +10,11 @@ module.exports = (sequelize, DataTypes) => {
     static associate(models) {
       prospections.belongsTo(models.employees, {
         foreignKey: "employee_id",
+        as: "Employee",
       });
       prospections.belongsTo(models.companies, {
         foreignKey: "company_id",
+        as: "Company",
       });
     }
   }
