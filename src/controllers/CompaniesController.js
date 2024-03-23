@@ -26,6 +26,14 @@ class CompaniesController {
 
     response.json(result);
   }
+
+  async show(request, response) {
+    const { id } = request.params;
+
+    const result = await companiesServices.showCompany(id);
+
+    return response.json(result);
+  }
 }
 
 module.exports = CompaniesController;

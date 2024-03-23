@@ -93,6 +93,20 @@ class CompaniesServices {
       where: { id },
     });
   }
+
+  async showCompany(id) {
+    const company = await companies.findOne({
+      where: {
+        id,
+      },
+    });
+
+    if (!company) {
+      throw new ErrorHandling("Company not found");
+    }
+
+    return company;
+  }
 }
 
 module.exports = CompaniesServices;

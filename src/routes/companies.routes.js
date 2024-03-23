@@ -9,5 +9,6 @@ const companiesController = new CompaniesController();
 companiesRoutes.post("/", companiesController.create);
 companiesRoutes.put("/:id", companiesController.update);
 companiesRoutes.delete("/:id", companiesController.delete);
+companiesRoutes.get("/:id", companiesController.show);
 
 module.exports = companiesRoutes;
