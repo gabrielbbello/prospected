@@ -2,12 +2,15 @@ const sequelize = require("./database/sequelize");
 const express = require("express");
 const dotenv = require("dotenv");
 dotenv.config({ path: "./src/configs/.env.development" });
+const routes = require("./routes");
 
 const app = express();
 
 app.use(express.json());
 
 sequelize.dbAuth();
+
+app.use(routes);
 
 const PORT = process.env.LOCAL_PORT || 3333;
 
