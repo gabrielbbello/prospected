@@ -77,6 +77,22 @@ class CompaniesServices {
       },
     );
   }
+
+  async deleteCompany(id) {
+    const company = await companies.findOne({
+      where: {
+        id,
+      },
+    });
+
+    if (!company) {
+      throw new ErrorHandling("Company not found");
+    }
+
+    await companies.destroy({
+      where: { id },
+    });
+  }
 }
 
 module.exports = CompaniesServices;

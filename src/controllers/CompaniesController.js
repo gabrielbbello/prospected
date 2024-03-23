@@ -18,6 +18,14 @@ class CompaniesController {
 
     return response.json(result);
   }
+
+  async delete(request, response) {
+    const { id } = request.params;
+
+    const result = await companiesServices.deleteCompany(id);
+
+    response.json(result);
+  }
 }
 
 module.exports = CompaniesController;
