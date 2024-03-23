@@ -107,6 +107,12 @@ class CompaniesServices {
 
     return company;
   }
+
+  async indexCompany() {
+    const allCompanies = await companies.findAll();
+
+    return allCompanies;
+  }
 }
 
 module.exports = CompaniesServices;

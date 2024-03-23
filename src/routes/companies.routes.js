@@ -10,5 +10,6 @@ companiesRoutes.post("/", companiesController.create);
 companiesRoutes.put("/:id", companiesController.update);
 companiesRoutes.delete("/:id", companiesController.delete);
 companiesRoutes.get("/:id", companiesController.show);
+companiesRoutes.get("/", companiesController.index);
 
 module.exports = companiesRoutes;

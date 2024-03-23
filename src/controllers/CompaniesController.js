@@ -34,6 +34,12 @@ class CompaniesController {
 
     return response.json(result);
   }
+
+  async index(request, response) {
+    const result = await companiesServices.indexCompany();
+
+    return response.json(result);
+  }
 }
 
 module.exports = CompaniesController;
