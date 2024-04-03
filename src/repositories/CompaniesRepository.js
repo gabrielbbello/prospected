@@ -1,6 +1,6 @@
 const { companies } = require("../models");
 
-class CompaniesRepositories {
+class CompaniesRepository {
   async findByEmail(email) {
     const companyEmail = await companies.findOne({
       where: {
@@ -59,4 +59,4 @@ class CompaniesRepositories {
   }
 }
 
-module.exports = CompaniesRepositories;
+module.exports = CompaniesRepository;

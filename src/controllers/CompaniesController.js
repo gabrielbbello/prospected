@@ -1,4 +1,4 @@
-const CompaniesRepositories = require("../repositories/CompaniesRepositories");
+const CompaniesRepository = require("../repositories/CompaniesRepository");
 const CreateCompanyService = require("../services/Companies/CreateCompanyService");
 const UpdateCompanyService = require("../services/Companies/UpdateCompanyService");
 const DeleteCompanyService = require("../services/Companies/DeleteCompanyService");
@@ -9,9 +9,9 @@ class CompaniesController {
   async create(request, response) {
     const { name, sector, email, password, cnpj } = request.body;
 
-    const companiesRepositories = new CompaniesRepositories();
+    const companiesRepository = new CompaniesRepository();
 
-    const createCompanyService = new CreateCompanyService(companiesRepositories);
+    const createCompanyService = new CreateCompanyService(companiesRepository);
 
     await createCompanyService.execute({ name, sector, email, password, cnpj });
 
@@ -22,9 +22,9 @@ class CompaniesController {
     const { name, sector, email, password, cnpj, oldPassword } = request.body;
     const { id } = request.params;
 
-    const companiesRepositories = new CompaniesRepositories();
+    const companiesRepository = new CompaniesRepository();
 
-    const updateCompanyService = new UpdateCompanyService(companiesRepositories);
+    const updateCompanyService = new UpdateCompanyService(companiesRepository);
 
     await updateCompanyService.execute({ id, name, sector, email, password, cnpj, oldPassword });
 
@@ -34,9 +34,9 @@ class CompaniesController {
   async delete(request, response) {
     const { id } = request.params;
 
-    const companiesRepositories = new CompaniesRepositories();
+    const companiesRepository = new CompaniesRepository();
 
-    const deleteCompanyService = new DeleteCompanyService(companiesRepositories);
+    const deleteCompanyService = new DeleteCompanyService(companiesRepository);
 
     await deleteCompanyService.execute({ id });
 
@@ -46,9 +46,9 @@ class CompaniesController {
   async show(request, response) {
     const { id } = request.params;
 
-    const companiesRepositories = new CompaniesRepositories();
+    const companiesRepository = new CompaniesRepository();
 
-    const showCompanyService = new ShowCompanyService(companiesRepositories);
+    const showCompanyService = new ShowCompanyService(companiesRepository);
 
     const company = await showCompanyService.execute({ id });
 
@@ -56,9 +56,9 @@ class CompaniesController {
   }
 
   async index(request, response) {
-    const companiesRepositories = new CompaniesRepositories();
+    const companiesRepository = new CompaniesRepository();
 
-    const indexCompanyService = new IndexCompanyService(companiesRepositories);
+    const indexCompanyService = new IndexCompanyService(companiesRepository);
 
     const allCompanies = await indexCompanyService.execute();
 
