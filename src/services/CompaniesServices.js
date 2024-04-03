@@ -1,6 +1,6 @@
-const { companies } = require("../models");
 const ErrorHandling = require("../utils/ErrorHandling");
 const { hash, compare } = require("bcrypt");
+const CompaniesRepositories = require("../repositories/CompaniesRepositories");
 
 class CompaniesServices {
   async createCompany(name, sector, email, password, cnpj) {
@@ -8,49 +8,41 @@ class CompaniesServices {
       throw new ErrorHandling("All fields are required");
     }
 
-    const existingCompany = await companies.findOne({
-      where: {
-        email,
-      },
-    });
+    const companiesRepositories = new CompaniesRepositories();
 
-    if (existingCompany) {
+    const existingEmail = await companiesRepositories.findByEmail(email);
+
+    if (existingEmail) {
+      throw new ErrorHandling("This email adress already exists");
+    }
+
+    const existingCnpj = await companiesRepositories.findByCnpj(cnpj);
+
+    if (existingCnpj) {
       throw new ErrorHandling("This company already exists");
     }
 
     const hashedPassword = await hash(password, 10);
 
-    const company = await companies.create({ name, sector, email, password: hashedPassword, cnpj });
-
-    return company;
+    await companiesRepositories.create({ name, sector, email, password: hashedPassword, cnpj });
   }
 
   async updateCompany(id, name, sector, email, password, cnpj, oldPassword) {
-    const company = await companies.findOne({
-      where: {
-        id,
-      },
-    });
+    const companiesRepositories = new CompaniesRepositories();
+
+    const company = await companiesRepositories.findById(id);
 
     if (!company) {
       throw new ErrorHandling("Company not found");
     }
 
-    const existingEmail = await companies.findOne({
-      where: {
-        email,
-      },
-    });
+    const existingEmail = await companiesRepositories.findByEmail(email);
 
     if (existingEmail && existingEmail.id !== company.id) {
       throw new ErrorHandling("The email address already exists");
     }
 
-    const existingCnpj = await companies.findOne({
-      where: {
-        cnpj,
-      },
-    });
+    const existingCnpj = await companiesRepositories.findByCnpj(cnpj);
 
     if (existingCnpj && existingCnpj.id !== company.id) {
       throw new ErrorHandling("The CNPJ already exists");
@@ -70,36 +62,25 @@ class CompaniesServices {
       company.password = await hash(password, 10);
     }
 
-    await companies.update(
-      { name, sector, email, password: company.password, cnpj },
-      {
-        where: { id },
-      },
-    );
+    await companiesRepositories.update({ id, name, sector, email, password: company.password, cnpj });
   }
 
   async deleteCompany(id) {
-    const company = await companies.findOne({
-      where: {
-        id,
-      },
-    });
+    const companiesRepositories = new CompaniesRepositories();
+
+    const company = await companiesRepositories.findById(id);
 
     if (!company) {
       throw new ErrorHandling("Company not found");
     }
 
-    await companies.destroy({
-      where: { id },
-    });
+    await companiesRepositories.delete({ id });
   }
 
   async showCompany(id) {
-    const company = await companies.findOne({
-      where: {
-        id,
-      },
-    });
+    const companiesRepositories = new CompaniesRepositories();
+
+    const company = await companiesRepositories.findById(id);
 
     if (!company) {
       throw new ErrorHandling("Company not found");
@@ -109,7 +90,9 @@ class CompaniesServices {
   }
 
   async indexCompany() {
-    const allCompanies = await companies.findAll();
+    const companiesRepositories = new CompaniesRepositories();
+
+    const allCompanies = await companiesRepositories.index();
 
     return allCompanies;
   }
