@@ -1,44 +1,68 @@
-const CompaniesServices = require("../services/CompaniesServices");
-const companiesServices = new CompaniesServices();
+const CompaniesRepositories = require("../repositories/CompaniesRepositories");
+const CreateCompanyService = require("../services/Companies/CreateCompanyService");
+const UpdateCompanyService = require("../services/Companies/UpdateCompanyService");
+const DeleteCompanyService = require("../services/Companies/DeleteCompanyService");
+const ShowCompanyService = require("../services/Companies/ShowCompanyService");
+const IndexCompanyService = require("../services/Companies/IndexCompanyService");
 
 class CompaniesController {
   async create(request, response) {
     const { name, sector, email, password, cnpj } = request.body;
 
-    const company = await companiesServices.createCompany(name, sector, email, password, cnpj);
+    const companiesRepositories = new CompaniesRepositories();
 
-    return response.json(company);
+    const createCompanyService = new CreateCompanyService(companiesRepositories);
+
+    await createCompanyService.execute({ name, sector, email, password, cnpj });
+
+    return response.json();
   }
 
   async update(request, response) {
     const { name, sector, email, password, cnpj, oldPassword } = request.body;
     const { id } = request.params;
 
-    const result = await companiesServices.updateCompany(id, name, sector, email, password, cnpj, oldPassword);
+    const companiesRepositories = new CompaniesRepositories();
 
-    return response.json(result);
+    const updateCompanyService = new UpdateCompanyService(companiesRepositories);
+
+    await updateCompanyService.execute({ id, name, sector, email, password, cnpj, oldPassword });
+
+    return response.json();
   }
 
   async delete(request, response) {
     const { id } = request.params;
 
-    const result = await companiesServices.deleteCompany(id);
+    const companiesRepositories = new CompaniesRepositories();
 
-    response.json(result);
+    const deleteCompanyService = new DeleteCompanyService(companiesRepositories);
+
+    await deleteCompanyService.execute({ id });
+
+    return response.json();
   }
 
   async show(request, response) {
     const { id } = request.params;
 
-    const result = await companiesServices.showCompany(id);
+    const companiesRepositories = new CompaniesRepositories();
 
-    return response.json(result);
+    const showCompanyService = new ShowCompanyService(companiesRepositories);
+
+    const company = await showCompanyService.execute({ id });
+
+    return response.json(company);
   }
 
   async index(request, response) {
-    const result = await companiesServices.indexCompany();
+    const companiesRepositories = new CompaniesRepositories();
 
-    return response.json(result);
+    const indexCompanyService = new IndexCompanyService(companiesRepositories);
+
+    const allCompanies = await indexCompanyService.execute();
+
+    return response.json(allCompanies);
   }
 }
 
