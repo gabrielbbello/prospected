@@ -25,7 +25,9 @@ class CreateCompanyService {
 
     const hashedPassword = await hash(password, 10);
 
-    await this.companiesRepositories.create({ name, sector, email, password: hashedPassword, cnpj });
+    const newCompany = await this.companiesRepositories.create({ name, sector, email, password: hashedPassword, cnpj });
+
+    return newCompany;
   }
 }
 
