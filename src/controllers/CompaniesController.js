@@ -1,9 +1,9 @@
 const CompaniesRepository = require("../repositories/CompaniesRepository");
-const CreateCompanyService = require("../services/Companies/CreateCompanyService");
-const UpdateCompanyService = require("../services/Companies/UpdateCompanyService");
-const DeleteCompanyService = require("../services/Companies/DeleteCompanyService");
-const ShowCompanyService = require("../services/Companies/ShowCompanyService");
-const IndexCompanyService = require("../services/Companies/IndexCompanyService");
+const CreateCompanyService = require("../services/companies/CreateCompanyService");
+const UpdateCompanyService = require("../services/companies/UpdateCompanyService");
+const DeleteCompanyService = require("../services/companies/DeleteCompanyService");
+const ShowCompanyService = require("../services/companies/ShowCompanyService");
+const IndexCompanyService = require("../services/companies/IndexCompanyService");
 
 class CompaniesController {
   async create(request, response) {
