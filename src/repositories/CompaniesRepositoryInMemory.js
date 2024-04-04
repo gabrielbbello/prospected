@@ -16,15 +16,15 @@ class CompaniesRepositoryInMemory {
     return company;
   }
 
-  async findByEmail({ email }) {
+  async findByEmail(email) {
     return this.companies.find((company) => company.email === email);
   }
 
-  async findById({ id }) {
+  async findById(id) {
     return this.companies.find((company) => company.id === id);
   }
 
-  async findByCnpj({ cnpj }) {
+  async findByCnpj(cnpj) {
     return this.companies.find((company) => company.cnpj === cnpj);
   }
 }
