@@ -20,7 +20,7 @@ class CompaniesController {
 
   async update(request, response) {
     const { name, sector, email, password, cnpj, oldPassword } = request.body;
-    const { id } = request.params;
+    const id = request.company.id;
 
     const companiesRepository = new CompaniesRepository();
 
@@ -32,7 +32,7 @@ class CompaniesController {
   }
 
   async delete(request, response) {
-    const { id } = request.params;
+    const id = request.company.id;
 
     const companiesRepository = new CompaniesRepository();
 
@@ -44,7 +44,7 @@ class CompaniesController {
   }
 
   async show(request, response) {
-    const { id } = request.params;
+    const id = request.company.id;
 
     const companiesRepository = new CompaniesRepository();
 
